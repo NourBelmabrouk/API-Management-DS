@@ -1,0 +1,20 @@
+#%RAML 1.0
+#%RAML 1.0 Trait
+title: My-API
+version: v1
+baseUri: http://localhost:5000
+/displayDate:
+  post:
+    description: get the detailled date
+    body:
+        application/json:
+          properties:
+              dayOfWeek: number
+              day: number
+              monthOfYear: number
+              year: number
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include example.json

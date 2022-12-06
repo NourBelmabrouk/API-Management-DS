@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="date" format="json">
+      <types:shape format="weave" example="examples/date.json"><![CDATA[%dw 2.0
+
+type date = {|
+  dayOfWeek: Number {"typeId": "int"}, 
+  day: Number {"typeId": "int"}, 
+  monthOfYear: Number {"typeId": "int"}, 
+  year: Number {"typeId": "int"}
+|} {"example": "{\\\"dayOfWeek\\\":3,\\\"day\\\":4,\\\"monthOfYear\\\":5,\\\"year\\\":2013}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="dayOfWeek" format="xml">
+      <types:example format="xml" element="response" location="examples/dayOfWeek.xml"/>
+    </types:type>
+    <types:type name="jsonWeek" format="json">
+      <types:shape format="weave" example="examples/dayOfWeek.json"><![CDATA[%dw 2.0
+
+type jsonWeek = {| dayOfWeek: String |} {"example": "{\\\"dayOfWeek\\\":\\\"Monday\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="monthOfYear" format="xml">
+      <types:example format="xml" element="response" location="examples/monthOfYear.xml"/>
+    </types:type>
+    <types:type name="jsonMonth" format="json">
+      <types:shape format="weave" example="examples/monthOfYear.json"><![CDATA[%dw 2.0
+
+type jsonMonth = {| monthOfYear: String |} {"example": "{\\\"monthOfYear\\\":\\\"March\\\"}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#0a4b23a2-6640-4ce9-92cc-ae011b2c977c">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="dayOfWeek"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="jsonWeek"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#055fdb3e-fb9a-46aa-b9a0-b5534ac3f2bc">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="monthOfYear"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="jsonMonth"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
